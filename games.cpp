@@ -25,6 +25,8 @@ public:
          {
             throw 400;
          }
+
+         p.decreaseCurrentMoney(bet);
       }
       catch (int x)
       {
@@ -35,6 +37,10 @@ public:
       return 200;
    }
 };
+
+
+
+
 
 class SlotMachine : public Game
 {
@@ -101,6 +107,8 @@ public:
    }
 };
 
+
+
 struct stocks
 {
    string name;
@@ -129,10 +137,78 @@ public:
          cout << i + 1 << ". " << s[i].name
               << " (₹" << s[i].price << ")\n";
       }
-      
-      int opt = 0;
-      cin>>opt;
 
-      
+      int opt = 0;
+      cin >> opt;
    }
+};
+
+
+
+
+
+class sumMax : public Game{
+
+
+   vector<vector<int>> arrays = {
+
+       {15, 25, 10, 5, 30, 20},
+
+       {8, 25, 10, 40, 15, 30, 12},
+
+       {10, 22, 8, 35, 12, 28, 14},
+
+       {14, 30, 6, 25, 10, 35, 18},
+
+       {12, 18, 8, 50, 10, 20, 13},
+
+       {9, 24, 15, 40, 35, 12, 28, 11},
+
+       {16, 12, 35, 10, 45, 22},
+
+       {11, 26, 14, 32, 9, 28, 17, 30, 15},
+
+       {5, 38, 15, 20, 18, 42, 7},
+
+       {19, 32, 14, 25, 28, 12, 27, 17}};
+
+   int computer_move(){
+
+   }
+ 
+   public:
+
+      void playGame(Player &p){
+          
+         if(getValidBet(p) != 200){
+            return;
+         }
+
+          int mode;
+         while(1){
+            cout<<"Enter mode you want to play : (1) Easy  (2) Hard \n";
+            cin>>mode;
+            if(mode ==1 || mode == 2){
+                break;
+            }
+            else{
+               cout<<"Enter valid key !!\n";
+            }
+         }
+
+         while(1){
+              srand(time(0));
+
+              vector<int> gameArr= arrays[rand()%arrays.size()];
+              int i = 0 , j = gameArr.size()-1;
+          
+              while(i <= j){
+                  
+              }
+              
+         }
+
+
+      }
+
 };
