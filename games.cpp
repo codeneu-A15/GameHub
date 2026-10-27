@@ -43,7 +43,7 @@ class SlotMachine : public Game
 public:
    void playGame(Player &p) override
    {
-       
+
       double intitalMoney = p.getCurrentMoney();
 
       while (1)
@@ -78,21 +78,61 @@ public:
 
          cout << "You lose!" << endl;
 
-         cout << "Current balance : "<<p.getCurrentMoney();
+         cout << "Current balance : " << p.getCurrentMoney();
 
          int choice = 0;
          cout << "Enter 1 to play again : ";
-         cin>>choice;
-         if(choice != 0){
-            cout<<"Entered with : " <<intitalMoney;
+         cin >> choice;
+         if (choice != 0)
+         {
+            cout << "Entered with : " << intitalMoney;
             double diff = p.getCurrentMoney() - intitalMoney;
-            if(diff < 0)  {
-               cout<<"Total loss : "<<diff<<endl;
-            }else {
-               cout<<"Total won : "<<diff<<endl;
+            if (diff < 0)
+            {
+               cout << "Total loss : " << diff << endl;
+            }
+            else
+            {
+               cout << "Total won : " << diff << endl;
             }
             return;
          }
       }
+   }
+};
+
+struct stocks
+{
+   string name;
+   double price;
+};
+
+class TradingSimul : public Game
+{
+
+   vector<stocks> s = {
+       {"Tesla", 1422.20},
+       {"Wipro", 2577.50},
+       {"Suzlon", 1755.38},
+       {"SpacePro", 3030.56},
+   };
+
+   vector<double> delta = {-35.55, -55.45, 60.33, 45.44, 80.99, -100.30, 115.44};
+
+public:
+   void playGame()
+   {
+      cout << "=== **TradingSilmul** ===\n\n";
+      cout << "Choose a stock: \n";
+      for (int i = 0; i < s.size(); ++i)
+      {
+         cout << i + 1 << ". " << s[i].name
+              << " (₹" << s[i].price << ")\n";
+      }
+      
+      int opt = 0;
+      cin>>opt;
+
+      
    }
 };
