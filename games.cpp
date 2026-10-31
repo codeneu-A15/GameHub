@@ -3,6 +3,7 @@
 #include "player.cpp"
 #include <string>
 #include <ctime>
+#include <climits>
 using namespace std;
 
 class Game
@@ -38,10 +39,6 @@ public:
    }
 };
 
-
-
-
-
 class SlotMachine : public Game
 {
    vector<string> symbols = {"💀", "🍒", "💰", "👑", "🔔"};
@@ -59,8 +56,6 @@ public:
          {
             return;
          }
-
-         srand(time(0));
 
          string s1 = symbols[rand() % 5];
          string s2 = symbols[rand() % 5];
@@ -107,7 +102,154 @@ public:
    }
 };
 
+class CoinGame : public Game
+{
 
+   vector<vector<int>> arrays = {
+
+       {15, 25, 10, 5, 30, 20},
+
+       {8, 25, 10, 40, 15, 30, 12},
+
+       {10, 22, 8, 35, 12, 28, 14},
+
+       {14, 30, 6, 25, 10, 35, 18},
+
+       {12, 18, 8, 50, 10, 20, 13},
+
+       {9, 24, 15, 40, 35, 12, 28, 11},
+
+       {16, 12, 35, 10, 45, 22},
+
+       {11, 26, 14, 32, 9, 28, 17, 30, 15},
+
+       {5, 38, 15, 20, 18, 42, 7},
+
+       {19, 32, 14, 25, 28, 12, 27, 17}};
+
+   int computer_score;
+   int player_score;
+
+   int optimalMoveCalc(int l, int r, vector<int> &gameArr, vector<vector<int>> &dp)
+   {
+      if (l > r)
+      {
+         return 0;
+      }
+
+      if (dp[l][r] != INT_MIN)
+      {
+         return dp[l][r];
+      }
+
+      int x = gameArr[l] - optimalMoveCalc(l + 1, r, gameArr, dp);
+      int y = gameArr[r] - optimalMoveCalc(l, r - 1, gameArr, dp);
+
+      return dp[l][r] = max(x, y);
+   }
+
+   int computer_move(int mode, int l, int r, vector<int> &gameArr, vector<vector<int>> &dp)
+   {
+      if (mode == 1)
+      {
+         return gameArr[l] >= gameArr[r] ? l : r;
+      }
+
+      int pickLeft = gameArr[l] - optimalMoveCalc(l + 1, r, gameArr, dp);
+      int pickRight = gameArr[r] - optimalMoveCalc(l, r - 1, gameArr, dp);
+
+      return pickLeft >= pickRight ? l : r;
+   }
+
+public:
+   void playGame(Player &p)
+   {
+      computer_score = 0;
+      player_score = 0;
+
+      if (getValidBet(p) != 200)
+      {
+         return;
+      }
+
+      int mode;
+      while (1)
+      {
+         cout << "Enter mode you want to play : (1) Easy  (2) Hard \n";
+         cin >> mode;
+         if (mode == 1 || mode == 2)
+         {
+            break;
+         }
+         else
+         {
+            cout << "Enter valid key !!\n";
+         }
+      }
+
+      vector<int> gameArr = arrays[rand() % arrays.size()];
+      int i = 0, j = gameArr.size() - 1;
+      bool computer_turn = false;
+
+      vector<vector<int>> dp(gameArr.size(), vector<int>(gameArr.size(), INT_MIN));
+
+      while (i <= j)
+      {
+         for (int start = i; start <= j; start++)
+         {
+            cout << gameArr[start] << " ";
+         }
+         cout << endl;
+         if (computer_turn)
+         {
+
+            int k = computer_move(mode, i, j, gameArr, dp);
+            string message = k == i ? "first" : "last";
+            cout << "Computer choice : " << message<<" element"<< endl;
+            int score = k == i ? gameArr[i++] : gameArr[j--];
+            computer_score += score;
+         }
+         else
+         {
+            char choice;
+            while (1)
+            {
+               cout << "Choose  i for first and j for last" << endl;
+               cin >> choice;
+
+               if (choice == 'i' || choice == 'j')
+                  break;
+               else
+                  cout << "Enter valid option" << endl;
+            }
+
+            int score = choice == 'i' ? gameArr[i++] : gameArr[j--];
+            player_score += score;
+         }
+
+         cout << "Computer score : " << computer_score << endl;
+         cout << "Your Score : " << player_score<<endl;
+         computer_turn = !computer_turn;
+      }
+
+      if (computer_score > player_score)
+      {
+         cout << "You Lost😔😔😔" << endl;
+      }
+      else if (computer_score == player_score)
+      {
+         cout << "Draw" << endl;
+         p.increaseCurrentMoney(bet);
+      }
+      else
+      {
+         cout << "You won🥳🥳🥳" << endl;
+
+         int f = mode == 1 ? 2 : 4;
+         p.increaseCurrentMoney(bet * f);
+      }
+   }
+};
 
 struct stocks
 {
@@ -137,78 +279,5 @@ public:
          cout << i + 1 << ". " << s[i].name
               << " (₹" << s[i].price << ")\n";
       }
-
-      int opt = 0;
-      cin >> opt;
    }
-};
-
-
-
-
-
-class sumMax : public Game{
-
-
-   vector<vector<int>> arrays = {
-
-       {15, 25, 10, 5, 30, 20},
-
-       {8, 25, 10, 40, 15, 30, 12},
-
-       {10, 22, 8, 35, 12, 28, 14},
-
-       {14, 30, 6, 25, 10, 35, 18},
-
-       {12, 18, 8, 50, 10, 20, 13},
-
-       {9, 24, 15, 40, 35, 12, 28, 11},
-
-       {16, 12, 35, 10, 45, 22},
-
-       {11, 26, 14, 32, 9, 28, 17, 30, 15},
-
-       {5, 38, 15, 20, 18, 42, 7},
-
-       {19, 32, 14, 25, 28, 12, 27, 17}};
-
-   int computer_move(){
-
-   }
- 
-   public:
-
-      void playGame(Player &p){
-          
-         if(getValidBet(p) != 200){
-            return;
-         }
-
-          int mode;
-         while(1){
-            cout<<"Enter mode you want to play : (1) Easy  (2) Hard \n";
-            cin>>mode;
-            if(mode ==1 || mode == 2){
-                break;
-            }
-            else{
-               cout<<"Enter valid key !!\n";
-            }
-         }
-
-         while(1){
-              srand(time(0));
-
-              vector<int> gameArr= arrays[rand()%arrays.size()];
-              int i = 0 , j = gameArr.size()-1;
-          
-              while(i <= j){
-                  
-              }
-              
-         }
-
-
-      }
-
 };

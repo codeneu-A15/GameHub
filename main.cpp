@@ -3,18 +3,15 @@
 #include <windows.h>
 #endif
 
-int main(){
-    #ifdef _WIN32
+int main()
+{
+#ifdef _WIN32
     SetConsoleOutputCP(CP_UTF8);
-    #endif
+#endif
 
- 
-    
-   
-
+    srand(time(0));
 
     
 
     return 0;
 }
-
