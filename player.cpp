@@ -12,7 +12,7 @@ public:
 
     Player(){
 
-        cout<<"Enter player name : ";
+        cout<<"Enter your name : ";
         getline(cin , name);
 
         cout<<"Enter intial money you want to enter with : ";
@@ -31,6 +31,11 @@ public:
 
     void decreaseCurrentMoney(double betAmt){
           currentMoney -= betAmt;
+    }
+
+    void getDetails(){
+        cout<<"Name : "<<name<<endl;
+        cout<<"Wallet : ₹"<<currentMoney<<endl;
     }
     
 };
