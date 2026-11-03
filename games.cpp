@@ -1,6 +1,5 @@
 #include <vector>
 #include "player.cpp"
-#include <ctime>
 #include <climits>
 #include <chrono>
 #include <thread>
@@ -64,7 +63,7 @@ public:
          cout << "\n-----Spin Detail----------\n";
          cout << "Your Bet : ₹" << bet << endl;
          cout << "--------------------------\n\n";
-         cout << "Spinning the reels😀😀😀\n\n";
+         cout << "Spinning the reels😀\n\n";
 
          string s1 = symbols[rand() % symbols.size()];
          string s2 = symbols[rand() % symbols.size()];
@@ -78,20 +77,20 @@ public:
 
          if (s1 == s2 && s2 == s3)
          {
-            cout << "Result : Congratulations you got all same🥳🥳🥳" << endl;
+            cout << "Result : Congratulations you got all same🥳" << endl;
             cout << "Net profit : ₹" << bet << endl;
             p.increaseCurrentMoney(2 * bet);
          }
 
          else if (s1 == s2 || s2 == s3 || s3 == s1)
          {
-            cout << "Result : You got 2 same😀😀😀" << endl;
+            cout << "Result : You got 2 same😀" << endl;
             cout << "Net profit : ₹" << bet * 0.5 << endl;
             p.increaseCurrentMoney(1.5 * bet);
          }
          else
          {
-            cout << "Result : You lose!😔😔😔" << endl;
+            cout << "Result : You lose!😔" << endl;
             cout << "Net loss : ₹" << bet << " 😨" << endl;
          }
 
@@ -219,7 +218,7 @@ public:
          }
          else
          {
-            cout << "Enter valid key😡😡😡\n";
+            cout << "Enter valid key😡\n";
          }
       }
 
@@ -236,7 +235,7 @@ public:
       cout << "--------------------------\n\n";
       this_thread::sleep_for(chrono::seconds(1));
 
-      cout << "-----------Coin game starts😀😀😀------------\n";
+      cout << "-----------Coin game starts😀------------\n";
       this_thread::sleep_for(chrono::seconds(1));
 
       while (i <= j)
@@ -268,7 +267,7 @@ public:
                if (choice == 'i' || choice == 'j')
                   break;
                else
-                  cout << "Enter valid option😡😡😡" << endl;
+                  cout << "Enter valid option😡" << endl;
             }
 
             int score = choice == 'i' ? gameArr[i++] : gameArr[j--];
@@ -288,7 +287,7 @@ public:
 
       if (computer_score > player_score)
       {
-         cout << "Result : You Lost😔😔😔" << endl;
+         cout << "Result : You Lost😔" << endl;
       }
       else if (computer_score == player_score && mode == 2)
       {
@@ -302,7 +301,7 @@ public:
       }
       else
       {
-         cout << "Result : You won🥳🥳🥳" << endl;
+         cout << "Result : You won🥳" << endl;
 
          double f = mode == 1 ? 1.5 : 2.5;
          p.increaseCurrentMoney(bet * f);
@@ -352,7 +351,7 @@ public:
       cout << "----Stock Price Simulator-----\n";
       if (p.getCurrentMoney() < 735.85)
       {
-         cout << "You don't have enough money to buy any stock 😔😔😔" << endl;
+         cout << "You don't have enough money to buy any stock 😔" << endl;
          return;
       }
 
@@ -372,18 +371,18 @@ public:
 
          if (choice <= 0 || choice > 10)
          {
-            cout << "Enter valid option😡😡😡";
+            cout << "Enter valid option😡";
          }
          else if (p.getCurrentMoney() < s[choice - 1].price)
          {
-            cout << "You don't have enough money to buy this stock 😔😔😔" << endl;
+            cout << "You don't have enough money to buy this stock 😔" << endl;
          }
          else
          {
             p.decreaseCurrentMoney(s[choice - 1].price);
             selectedStock = s[choice - 1];
             initialPrice = selectedStock.price;
-            cout << "You have successfully purchased the stock🤩🤩🤩" << endl;
+            cout << "You have successfully purchased the stock🤩" << endl;
             break;
          }
       }
